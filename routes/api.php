@@ -2,29 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\authController;
 use App\Http\Controllers\Api\loginController;
-use App\Http\Controllers\Api\usuarioController;
 
 
-//Login
+use App\Http\Controllers\authController;
+use App\Http\Controllers\usuarioController;
 
-Route::post('/login', [loginController::class, 'login']);
-Route::apiResource('/usuarios', usuarioController::class);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/usuarios', [UsuarioController::class, 'index']);
+Route::post('/usuarios', [UsuarioController::class, 'store']);
+Route::get('/usuarios/{id}', [UsuarioController::class, 'show']);
+Route::put('/usuarios/{id}', [UsuarioController::class, 'update']);
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']);
 
-Route::middleware('auth:sanctum')->get('/usuario', [authController::class, 'usuario']);
-Route::middleware('auth:sanctum')->post('/logout', [authController::class, 'logout']);
-
-//Api Usuarios
-
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::get('/usuarios', [usuarioController::class, 'index']);
-    Route::post('/usuarios', [usuarioController::class, 'store']);
-    Route::get('/usuarios/{id}', [usuarioController::class, 'show']);
-    Route::put('/usuarios/{id}', [usuarioController::class, 'update']);
-    // Route::patch('/usuarios/{id}', [usuarioController::class, 'updatePartial']);
-    Route::delete('/usuarios/{id}', [usuarioController::class, 'destroy']);
-});
+;
 
 //Api Credito
 
